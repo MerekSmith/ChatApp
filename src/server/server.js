@@ -1,12 +1,14 @@
-const app = require('http').createServer();
-const io = module	.exports.io = require('socket.io')(app);
+const express = require("express");
+const app = express();
+const server = require("http").Server(app);
+const io = (module.exports.io = require("socket.io")(server));
 
-const PORT = process.env.PORT || 3231
+const PORT = process.env.PORT || 3231;
 
-const SocketManager = require('./SocketManager');
+const SocketManager = require("./SocketManager");
 
-io.on('connection', SocketManager);
+io.on("connection", SocketManager);
 
-app.listen(PORT, () => {
-	console.log('Server is now listening to port '+ PORT);
-})
+server.listen(PORT, () => {
+  console.log("Server is now listening to port " + PORT);
+});
