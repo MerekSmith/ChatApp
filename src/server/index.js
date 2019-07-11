@@ -7,7 +7,14 @@ const PORT = process.env.PORT || 3231;
 
 const SocketManager = require("./SocketManager");
 
-// app.use(express.static(__dirname + '/../../build'))
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(__dirname + "/../../build"));
+}
+
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "/../../build", "index.html"));
+});
+
 io.on("connection", SocketManager);
 
 server.listen(PORT, () => {
